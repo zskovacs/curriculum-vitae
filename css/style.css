@@ -1060,7 +1060,7 @@ ul.portfolioContainer li:hover span.hoverBox .linKed{
 	margin:0px;
 }
 .conForm .submitBnt:hover{
-	background:#f5534b;
+	cursor: not-allowed;
 }
 
 .textGroup{
