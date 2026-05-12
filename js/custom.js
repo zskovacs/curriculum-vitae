@@ -67,28 +67,58 @@ jQuery(function($) {
 
 
 
-// for skill chat jquary
+// for skill chart jQuery
 $(document).ready(function(e) {
-//var windowBottom = $(window).height();
-var index=0;
-$(document).scroll(function(){
-	var top = $('.technical').height()-$(window).scrollTop();
-	//console.log(top)
-	if(top<-300){
-		if(index==0){	
-			
-			$('.chart').easyPieChart({
-				easing: 'easeOutBounce',
-				onStep: function(from, to, percent) {
-					$(this.el).find('.percent').text(Math.round(percent));
-				}
-			});
-			
+var skillsStarted = false;
+var skillChartsDone = 0;
+
+function startVibeCodingChart() {
+	$('.technical').addClass('vibe-active');
+	$('.vibeChart').easyPieChart({
+		barColor: '#24c75a',
+		trackColor: '#dbeedd',
+		scaleColor: '#dbeedd',
+		easing: 'easeOutBounce',
+		animate: 1200,
+		onStep: function(from, to, percent) {
+			$(this.el).find('.percent').text(Math.round(percent));
+		},
+		onStop: function() {
+			setTimeout(function() {
+				$('.technical').addClass('vibe-settled');
+			}, 4200);
 		}
-		index++;
+	});
+}
+
+function startSkillCharts() {
+	if (skillsStarted) {
+		return;
 	}
-})
-//console.log(nagativeValue)
+
+	var technicalTop = $('.technical').offset().top;
+	var triggerPoint = $(window).scrollTop() + $(window).height();
+	if (triggerPoint < technicalTop + 220) {
+		return;
+	}
+
+	skillsStarted = true;
+	$('.skillChart').easyPieChart({
+		easing: 'easeOutBounce',
+		onStep: function(from, to, percent) {
+			$(this.el).find('.percent').text(Math.round(percent));
+		},
+		onStop: function() {
+			skillChartsDone++;
+			if (skillChartsDone === $('.skillChart').length) {
+				setTimeout(startVibeCodingChart, 2300);
+			}
+		}
+	});
+}
+
+$(window).on('scroll resize load', startSkillCharts);
+startSkillCharts();
 });
 
 
@@ -116,7 +146,7 @@ $(function() {
 // chart loding
 $(window).load(function() {
 	
-	var chart = window.chart = $('.chart').data('easyPieChart');
+	var chart = window.chart = $('.skillChart').data('easyPieChart');
 	$('.js_update').on('click', function() {
 		chart.update(Math.random()*100);
 	});
