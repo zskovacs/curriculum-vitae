@@ -19,6 +19,7 @@ async function copyPublicFiles(outDir) {
   await Promise.all([
     copyFile("public/CNAME", join(outDir, "CNAME")),
     copyFile("public/google537486c8762b25a2.html", join(outDir, "google537486c8762b25a2.html")),
+    copyFile("src/scripts/site.js", join(outDir, "assets", "site.js")),
   ]);
 }
 
@@ -26,6 +27,7 @@ export async function buildSite({ outDir = "dist" } = {}) {
   validateLocalePair(enContent, huContent);
   await rm(outDir, { recursive: true, force: true });
   await mkdir(join(outDir, "hu"), { recursive: true });
+  await mkdir(join(outDir, "assets"), { recursive: true });
   await writeFile(join(outDir, "index.html"), renderPage(enContent, huContent));
   await writeFile(join(outDir, "hu", "index.html"), renderPage(huContent, enContent));
   await copyPublicFiles(outDir);

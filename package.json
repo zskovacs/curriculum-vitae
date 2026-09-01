@@ -5,7 +5,7 @@
     "node": ">=24 <27"
   },
   "scripts": {
-    "test": "node --test",
+    "test": "node --test test/*.test.mjs",
     "validate": "node scripts/validate-content.mjs",
     "build": "node scripts/build.mjs && npx @tailwindcss/cli -i ./src/styles/site.css -o ./dist/assets/site.css --minify",
     "check": "npm test && npm run validate && npm run build && html-validate \"dist/**/*.html\"",
