@@ -98,7 +98,7 @@ header nav { position: relative; display: flex; max-width: 88rem; min-height: 3.
   .desktop-navigation .language-link { color: var(--color-cobalt); }
 }
 @media (max-width: 45rem) {
-  h1 { max-width: 100%; }
+  h1 { max-width: 100%; font-size: clamp(1.5rem, 8vw, 4rem); }
   .editorial-section, .contact-footer { padding-top: 3.75rem; padding-bottom: 3.75rem; }
   .editorial-section:not(.hero), .contact-footer { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
   .section-content, .editorial-section article { min-width: 0; }
