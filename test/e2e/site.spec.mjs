@@ -64,12 +64,19 @@ test("mobile layout uses a one-column reading order and comfortable targets", as
   expect(contentBox.y).toBeGreaterThanOrEqual(periodBox.y + periodBox.height);
 });
 
-test("desktop navigation stays visible without opening the disclosure", async ({ page }) => {
+test("navigation switches to the full desktop layout only when it fits", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 800 });
   await page.goto("/");
 
+  await expect(page.locator("details.site-menu summary")).toBeVisible();
+  await expect(page.locator(".desktop-navigation")).toBeHidden();
+  expect(await page.locator("html").evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+
+  await page.setViewportSize({ width: 1536, height: 800 });
+
   await expect(page.locator("details.site-menu summary")).toBeHidden();
   await expect(page.locator('.desktop-navigation a[href="#fithub"]')).toBeVisible();
+  expect(await page.locator("html").evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
 });
 
 test("navigation breakpoints do not introduce horizontal overflow", async ({ page }) => {
