@@ -22,3 +22,11 @@ export function validateLocalePair(en, hu) {
   assertSameIds("experience", en.experience, hu.experience);
   if (en.project.id !== hu.project.id) throw new ContentValidationError("project IDs differ between locales");
 }
+
+if (import.meta.main) {
+  const [{ enContent }, { huContent }] = await Promise.all([
+    import("../src/content/en.mjs"),
+    import("../src/content/hu.mjs"),
+  ]);
+  validateLocalePair(enContent, huContent);
+}
