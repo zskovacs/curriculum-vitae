@@ -53,8 +53,8 @@ test("the authoritative locale data remains structurally aligned", () => {
   assert.equal(enContent.project.url, "https://www.fithub.hu");
   assert.equal(enContent.experience.length, 5);
   assert.equal(huContent.experience.length, 5);
-  assert.equal(enContent.resumeUrl, null);
-  assert.equal(huContent.resumeUrl, null);
+  assert.equal(enContent.resumeUrl, "/cv/Kovacs_Zsolt_CV_EN.pdf");
+  assert.equal(huContent.resumeUrl, "/cv/Kovacs_Zsolt_CV_HU.pdf");
 });
 
 test("locale data excludes forbidden personal fields", () => {

@@ -58,5 +58,5 @@ export const huContent = {
   languages: [{ language: "Magyar", level: "anyanyelv" }, { language: "Angol", level: "B2, szakmai munkavégzéshez használható szint" }],
   additionalTechnologies: [".NET Framework", "WinForms", "WPF", "WCF", "SignalR", "ASP.NET MVC", "AngularJS", "KnockoutJS", "Kubernetes", "Azure", "TFVC", "Hyper-V"],
   contact: { phone: "+36 30 160 6530", email: "job@kovacs.id", linkedIn: "https://www.linkedin.com/in/zsoltmkovacs", gitHub: "https://github.com/zskovacs" },
-  resumeUrl: null,
+  resumeUrl: "/cv/Kovacs_Zsolt_CV_HU.pdf",
 };

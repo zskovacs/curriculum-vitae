@@ -58,5 +58,5 @@ export const enContent = {
   languages: [{ language: "Hungarian", level: "Native" }, { language: "English", level: "B2, professional working proficiency" }],
   additionalTechnologies: [".NET Framework", "WinForms", "WPF", "WCF", "SignalR", "ASP.NET MVC", "AngularJS", "KnockoutJS", "Kubernetes", "Azure", "TFVC", "Hyper-V"],
   contact: { phone: "+36 30 160 6530", email: "job@kovacs.id", linkedIn: "https://www.linkedin.com/in/zsoltmkovacs", gitHub: "https://github.com/zskovacs" },
-  resumeUrl: null,
+  resumeUrl: "/cv/Kovacs_Zsolt_CV_EN.pdf",
 };

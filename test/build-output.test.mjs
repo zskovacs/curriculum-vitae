@@ -33,10 +33,10 @@ test("builds crawlable English and Hungarian pages", async () => {
   assert.match(hu, /rel="canonical" href="https:\/\/cv\.kovacs\.id\/hu\/"/);
   assert.match(en, /application\/ld\+json/);
   assert.match(en, /<link rel="icon" href="\/favicon\.svg" type="image\/svg\+xml">/);
+  assert.match(en, /href="\/cv\/Kovacs_Zsolt_CV_EN\.pdf" download>Download CV \(PDF\)<\/a>/);
+  assert.match(hu, /href="\/cv\/Kovacs_Zsolt_CV_HU\.pdf" download>Önéletrajz letöltése \(PDF\)<\/a>/);
   assert.match(en, /\+36&nbsp;30&nbsp;160&nbsp;6530/);
   assert.doesNotMatch(en, /\n[ \t]+\n/);
-  assert.doesNotMatch(en, /class="resume-link"/);
-  assert.doesNotMatch(hu, /class="resume-link"/);
   assert.ok(en.indexOf('id="summary"') < en.indexOf('id="expertise"'));
   assert.ok(en.indexOf('id="expertise"') < en.indexOf('id="ai-native"'));
   assert.ok(en.indexOf('id="ai-native"') < en.indexOf('id="fithub"'));
@@ -59,6 +59,8 @@ test("builds crawlable English and Hungarian pages", async () => {
   await stat(join(outDir, "CNAME"));
   await stat(join(outDir, "google537486c8762b25a2.html"));
   await stat(join(outDir, "favicon.svg"));
+  await stat(join(outDir, "cv", "Kovacs_Zsolt_CV_EN.pdf"));
+  await stat(join(outDir, "cv", "Kovacs_Zsolt_CV_HU.pdf"));
 });
 
 test("Person metadata contains exactly the localized title and documented expertise", async () => {
@@ -78,13 +80,12 @@ test("Person metadata contains exactly the localized title and documented expert
 });
 
 test("renders a localized CV download only when resumeUrl is available", () => {
-  const withResume = structuredClone(enContent);
-  withResume.resumeUrl = "/zsolt-kovacs-cv.pdf";
-  const html = renderPage(withResume, huContent);
+  const withoutResume = structuredClone(enContent);
+  withoutResume.resumeUrl = null;
 
-  assert.match(html, /<a class="resume-link" href="\/zsolt-kovacs-cv\.pdf" download>Download CV \(PDF\)<\/a>/);
-  assert.doesNotMatch(renderPage(enContent, huContent), /class="resume-link"/);
-  assert.doesNotMatch(renderPage(huContent, enContent), /class="resume-link"/);
+  assert.match(renderPage(enContent, huContent), /<a class="resume-link" href="\/cv\/Kovacs_Zsolt_CV_EN\.pdf" download>Download CV \(PDF\)<\/a>/);
+  assert.match(renderPage(huContent, enContent), /<a class="resume-link" href="\/cv\/Kovacs_Zsolt_CV_HU\.pdf" download>Önéletrajz letöltése \(PDF\)<\/a>/);
+  assert.doesNotMatch(renderPage(withoutResume, huContent), /class="resume-link"/);
 });
 
 test("renders localized FitHub detail labels", async () => {
