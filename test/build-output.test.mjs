@@ -22,6 +22,13 @@ test("builds crawlable English and Hungarian pages", async () => {
   assert.match(en, /\+36&nbsp;30&nbsp;160&nbsp;6530/);
   assert.doesNotMatch(en, /\n[ \t]+\n/);
   assert.doesNotMatch(en, /download.*resume/i);
+  assert.ok(en.indexOf('id="summary"') < en.indexOf('id="expertise"'));
+  assert.ok(en.indexOf('id="expertise"') < en.indexOf('id="ai-native"'));
+  assert.ok(en.indexOf('id="ai-native"') < en.indexOf('id="fithub"'));
+  assert.ok(en.indexOf('id="fithub"') < en.indexOf('id="experience"'));
+  assert.match(en, /data-surface="ai-native"/);
+  assert.match(en, /data-surface="project"/);
+  assert.doesNotMatch(en, /data-percent|progressbar|<img[^>]+portrait/i);
 
   await stat(join(outDir, "robots.txt"));
   await stat(join(outDir, "sitemap.xml"));

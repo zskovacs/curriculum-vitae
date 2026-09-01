@@ -1,0 +1,2 @@
+import { escapeHtml } from "../html.mjs";
+export function renderAiNative(content) { return `<section id="ai-native" class="editorial-section ai-native" data-surface="ai-native" aria-labelledby="ai-native-title"><p class="section-number" aria-hidden="true">03</p><div class="section-content"><h2 id="ai-native-title">${escapeHtml(content.label)}</h2><ol class="workflow-steps">${content.steps.map((step, index) => `<li><span aria-hidden="true">0${index + 1}</span><p>${escapeHtml(step.description)}</p></li>`).join("")}</ol></div></section>`; }
