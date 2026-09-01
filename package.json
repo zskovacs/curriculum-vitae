@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <27"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate": "node scripts/validate-content.mjs",
+    "build": "node scripts/build.mjs && npx @tailwindcss/cli -i ./src/styles/site.css -o ./dist/assets/site.css --minify",
+    "check": "npm test && npm run validate && npm run build && html-validate \"dist/**/*.html\"",
+    "preview": "node scripts/serve.mjs",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/cli": "^4.3.3",
+    "html-validate": "^11.11.0",
+    "tailwindcss": "^4.3.3"
+  }
+}
