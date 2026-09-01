@@ -89,35 +89,24 @@ test("navigation breakpoints do not introduce horizontal overflow", async ({ pag
   }
 });
 
-test("Hungarian hero keeps key title terms on one visual line", async ({ page }) => {
+test("hero title uses three deliberate visual lines in both locales", async ({ page }) => {
+  const locales = [
+    { path: "/", lines: ["Senior / Lead", "Full-Stack", "Software Engineer"] },
+    { path: "/hu/", lines: ["Senior / Lead", "Full-Stack", "Szoftverfejlesztő"] },
+  ];
+
   for (const width of [320, 1440, 2536]) {
     await page.setViewportSize({ width, height: 1021 });
-    await page.goto("/hu/");
 
-    const lineCounts = await page.locator("#hero-title").evaluate((element) => {
-      const words = ["Full-Stack", "Szoftverfejlesztő"];
-      const textNodes = [];
-      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-      while (walker.nextNode()) textNodes.push(walker.currentNode);
+    for (const { path, lines: expectedLines } of locales) {
+      await page.goto(path);
+      const titleLines = page.locator("#hero-title > .hero-title-line");
 
-      return words.map((word) => {
-        const textNode = textNodes.find(node => node.textContent.includes(word));
-        const start = textNode.textContent.indexOf(word);
-        const lineTops = new Set();
-
-        for (let index = start; index < start + word.length; index += 1) {
-          const range = document.createRange();
-          range.setStart(textNode, index);
-          range.setEnd(textNode, index + 1);
-          lineTops.add(Math.round(range.getBoundingClientRect().top));
-        }
-
-        return { word, lineCount: lineTops.size };
-      });
-    });
-
-    for (const { word, lineCount } of lineCounts) {
-      expect(lineCount, `${word} at viewport width: ${width}px`).toBe(1);
+      await expect(titleLines).toHaveText(expectedLines);
+      const lineTops = await titleLines.evaluateAll(elements =>
+        elements.map(element => Math.round(element.getBoundingClientRect().top)),
+      );
+      expect(new Set(lineTops).size, `${path} at viewport width: ${width}px`).toBe(3);
     }
   }
 });

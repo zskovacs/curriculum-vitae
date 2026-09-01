@@ -1,9 +1,12 @@
 import { escapeHtml } from "../html.mjs";
 export function renderHero(content) {
-  const title = escapeHtml(content.hero.title).replace(
-    "Full-Stack",
-    '<span class="hero-title-term">Full-Stack</span>',
-  );
+  const [leadership, specialization] = content.hero.title.split(" Full-Stack ");
+  const titleLines = specialization
+    ? [leadership, "Full-Stack", specialization]
+    : [content.hero.title];
+  const title = titleLines
+    .map(line => `<span class="hero-title-line">${escapeHtml(line)}</span>`)
+    .join(" ");
   const resumeLink = content.resumeUrl
     ? `<p class="hero-actions"><a class="resume-link" href="${escapeHtml(content.resumeUrl)}" download>${escapeHtml(content.hero.resumeLabel)}</a></p>`
     : "";
