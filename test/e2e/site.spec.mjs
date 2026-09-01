@@ -107,6 +107,20 @@ test("hero title uses three deliberate visual lines in both locales", async ({ p
         elements.map(element => Math.round(element.getBoundingClientRect().top)),
       );
       expect(new Set(lineTops).size, `${path} at viewport width: ${width}px`).toBe(3);
+
+      const lineLayout = await page.locator("#hero-title").evaluate((element) => ({
+        availableWidth: element.getBoundingClientRect().width,
+        textWidths: Array.from(element.children).map((line) => {
+          const range = document.createRange();
+          range.selectNodeContents(line);
+          return range.getBoundingClientRect().width;
+        }),
+      }));
+      for (const textWidth of lineLayout.textWidths) {
+        expect(textWidth, `${path} at viewport width: ${width}px`).toBeLessThanOrEqual(
+          lineLayout.availableWidth - 16,
+        );
+      }
     }
   }
 });
