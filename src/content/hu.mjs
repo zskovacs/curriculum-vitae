@@ -11,7 +11,7 @@ export const huContent = {
       { id: "summary", href: "#summary", label: "Szakmai összefoglaló" },
       { id: "expertise", href: "#expertise", label: "Főbb szakterületek" },
       { id: "ai-native", href: "#ai-native", label: "AI-Native szoftverfejlesztés" },
-      { id: "project", href: "#project", label: "Kiemelt projekt — FitHub" },
+      { id: "project", href: "#fithub", label: "Kiemelt projekt — FitHub" },
       { id: "experience", href: "#experience", label: "Szakmai tapasztalat" },
       { id: "education", href: "#education", label: "Tanulmányok" },
       { id: "languages", href: "#languages", label: "Nyelvek & további technológiák" },

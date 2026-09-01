@@ -11,7 +11,7 @@ export const enContent = {
       { id: "summary", href: "#summary", label: "Professional Summary" },
       { id: "expertise", href: "#expertise", label: "Core Expertise" },
       { id: "ai-native", href: "#ai-native", label: "AI-Native Software Engineering" },
-      { id: "project", href: "#project", label: "Selected Project — FitHub" },
+      { id: "project", href: "#fithub", label: "Selected Project — FitHub" },
       { id: "experience", href: "#experience", label: "Professional Experience" },
       { id: "education", href: "#education", label: "Education" },
       { id: "languages", href: "#languages", label: "Languages & Additional Technologies" },

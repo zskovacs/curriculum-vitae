@@ -30,6 +30,15 @@ test("builds crawlable English and Hungarian pages", async () => {
   assert.match(en, /data-surface="project"/);
   assert.doesNotMatch(en, /data-percent|progressbar|<img[^>]+portrait/i);
 
+  for (const page of [en, hu]) {
+    const nav = page.match(/<nav\b[^>]*>([\s\S]*?)<\/nav>/)?.[1] ?? "";
+    const fragmentHrefs = [...nav.matchAll(/href="#([^"]+)"/g)].map(match => match[1]);
+
+    for (const id of fragmentHrefs) {
+      assert.match(page, new RegExp(`<[^>]+\\bid="${id}"`));
+    }
+  }
+
   await stat(join(outDir, "robots.txt"));
   await stat(join(outDir, "sitemap.xml"));
   await stat(join(outDir, "CNAME"));
