@@ -113,4 +113,24 @@ test("print hides navigation and preserves readable content", async ({ page }) =
     element => getComputedStyle(element, "::after").content,
   );
   expect(externalLinkContent).not.toBe("none");
+
+  const pageSize = await page.evaluate(() => {
+    function findPageRule(rules) {
+      for (const rule of rules) {
+        if (rule.constructor.name === "CSSPageRule") return rule.style.getPropertyValue("size");
+        if ("cssRules" in rule) {
+          const nested = findPageRule(rule.cssRules);
+          if (nested) return nested;
+        }
+      }
+      return "";
+    }
+
+    for (const sheet of document.styleSheets) {
+      const size = findPageRule(sheet.cssRules);
+      if (size) return size;
+    }
+    return "";
+  });
+  expect(pageSize).toBe("a4");
 });

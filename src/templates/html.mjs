@@ -18,8 +18,10 @@ export function renderDocument({ content, alternate, body }) {
     "@context": "https://schema.org",
     "@type": "Person",
     name: content.person.name,
+    jobTitle: content.hero.title,
     url: canonicalUrl,
     sameAs: [content.contact.linkedIn, content.contact.gitHub],
+    knowsAbout: content.expertise.flatMap(group => group.items),
   };
   const personJson = JSON.stringify(person).replace(/[<>&]/g, character =>
     `\\u${character.codePointAt(0).toString(16).padStart(4, "0")}`);

@@ -21,6 +21,7 @@ export const enContent = {
   hero: {
     title: "Senior / Lead Full-Stack Software Engineer",
     tagline: ".NET | Angular | AI-Native Software Development",
+    resumeLabel: "Download CV (PDF)",
   },
   summary: "Senior / Lead Full-Stack Software Engineer with 17+ years of experience designing and delivering business applications and web systems. Strong hands-on background in C#, .NET, ASP.NET Core, Angular/TypeScript, software architecture, data access and distributed systems. Extensive practical experience with AI-native development: coding agents are integrated into the full software development lifecycle, from requirements and specifications to implementation, debugging, testing, code review and refactoring. Comfortable taking technical ownership from application design through Dockerized Linux infrastructure and production observability.",
   expertise: [
@@ -39,6 +40,7 @@ export const enContent = {
   ],
   project: {
     id: "fithub", title: "FitHub — Independent SaaS Project", period: "2025 - Present", url: "https://www.fithub.hu",
+    labels: { stack: "Stack", infrastructure: "Infrastructure", observability: "Observability", workflow: "Workflow" },
     description: "Designed and built a modern SaaS product end-to-end, covering application architecture, backend, frontend, database, infrastructure, deployment and production operations.",
     stack: "Application stack: C# 14, .NET 10, ASP.NET Core, Entity Framework Core 10, Angular 22, TypeScript, Tailwind CSS, PostgreSQL 18 and Hangfire.",
     infrastructure: "Built a Docker/Docker Compose multi-container production environment on Debian 13 / Hetzner VPS with Caddy and Cloudflare DNS, Proxy, Pages and R2.",

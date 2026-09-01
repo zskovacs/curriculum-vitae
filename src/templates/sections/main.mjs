@@ -16,7 +16,7 @@ export function renderMain(content) {
   const label = labels[content.locale];
   const summaryLabel = content.nav.items.find(item => item.id === "summary").label;
   return `<main id="main-content">
-${renderHero({ person: content.person, hero: content.hero })}
+${renderHero({ person: content.person, hero: content.hero, resumeUrl: content.resumeUrl })}
 ${renderSummary({ label: summaryLabel, summary: content.summary })}
 ${renderExpertise({ label: label.expertise, groups: content.expertise })}
 ${renderAiNative({ label: label.aiNative, steps: content.aiNative })}

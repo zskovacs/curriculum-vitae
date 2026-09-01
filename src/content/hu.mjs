@@ -21,6 +21,7 @@ export const huContent = {
   hero: {
     title: "Senior / Lead Full-Stack Szoftverfejlesztő",
     tagline: ".NET | Angular | AI-Native szoftverfejlesztés",
+    resumeLabel: "Önéletrajz letöltése (PDF)",
   },
   summary: "Senior / Lead full-stack szoftverfejlesztő 17+ év tapasztalattal üzleti alkalmazások és webes rendszerek tervezésében és fejlesztésében. Erős, hands-on háttér C#, .NET, ASP.NET Core, Angular/TypeScript, szoftverarchitektúra, adatkezelés és elosztott rendszerek területén. Jelentős gyakorlati tapasztalatom van AI-native fejlesztési workflow-kban: a coding agenteket a teljes fejlesztési életciklusban használom a követelményektől és specifikációktól az implementáción, hibakeresésen és tesztelésen át a code review-ig és refaktorálásig. Az alkalmazás-architektúrától a Docker-alapú Linux infrastruktúráig és production observability-ig end-to-end szemlélettel dolgozom.",
   expertise: [
@@ -39,6 +40,7 @@ export const huContent = {
   ],
   project: {
     id: "fithub", title: "FitHub — Önálló SaaS projekt", period: "2025 - jelenleg", url: "https://www.fithub.hu",
+    labels: { stack: "Technológiák", infrastructure: "Infrastruktúra", observability: "Megfigyelhetőség", workflow: "Munkafolyamat" },
     description: "Modern SaaS termék end-to-end tervezése és fejlesztése, beleértve az alkalmazásarchitektúrát, backendet, frontendet, adatbázist, infrastruktúrát, deploymentet és production üzemeltetést.",
     stack: "Alkalmazás stack: C# 14, .NET 10, ASP.NET Core, Entity Framework Core 10, Angular 22, TypeScript, Tailwind CSS, PostgreSQL 18 és Hangfire.",
     infrastructure: "Docker/Docker Compose multi-container production környezet kialakítása Debian 13 / Hetzner VPS alapon, Caddy és Cloudflare DNS, Proxy, Pages és R2 használatával.",

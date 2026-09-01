@@ -6,7 +6,8 @@ import { enContent } from "../src/content/en.mjs";
 import { huContent } from "../src/content/hu.mjs";
 
 const base = {
-  locale: "en", route: "/", seo: {}, person: {}, nav: {}, hero: {}, summary: "Summary",
+  locale: "en", route: "/", seo: {}, person: {},
+  nav: { items: [{ id: "summary" }, { id: "contact" }] }, hero: {}, summary: "Summary",
   expertise: [{ id: "backend" }], aiNative: [{ id: "sdd" }], project: { id: "fithub" },
   experience: [{ id: "mi-software" }], education: {}, languages: [],
   additionalTechnologies: [], contact: {}, resumeUrl: null,
@@ -34,6 +35,15 @@ test("rejects mismatched ordered item IDs", () => {
   hu.route = "/hu/";
   hu.experience[0].id = "different";
   assert.throws(() => validateLocalePair(base, hu), /experience IDs/);
+});
+
+test("rejects navigation IDs that differ in order between locales", () => {
+  const hu = structuredClone(base);
+  hu.locale = "hu";
+  hu.route = "/hu/";
+  hu.nav.items.reverse();
+
+  assert.throws(() => validateLocalePair(base, hu), /navigation IDs/);
 });
 
 test("the authoritative locale data remains structurally aligned", () => {

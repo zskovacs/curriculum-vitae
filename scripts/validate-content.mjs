@@ -17,6 +17,7 @@ export function validateLocalePair(en, hu) {
       if (!(key in locale)) throw new ContentValidationError(`${name}.${key} is required`);
     }
   }
+  assertSameIds("navigation", en.nav.items, hu.nav.items);
   assertSameIds("expertise", en.expertise, hu.expertise);
   assertSameIds("aiNative", en.aiNative, hu.aiNative);
   assertSameIds("experience", en.experience, hu.experience);
