@@ -72,11 +72,30 @@ test("navigation switches to the full desktop layout only when it fits", async (
   await expect(page.locator(".desktop-navigation")).toBeHidden();
   expect(await page.locator("html").evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
 
-  await page.setViewportSize({ width: 1536, height: 800 });
+  const diagnostics = [];
+  for (const width of [1536, 1600, 1728, 1920]) {
+    await page.setViewportSize({ width, height: 800 });
+    diagnostics.push(await page.evaluate(currentWidth => {
+      const root = document.documentElement;
+      const navigation = document.querySelector(".desktop-navigation");
+      const links = navigation.querySelector("ul");
+      const language = navigation.querySelector(".language-link");
+      return {
+        width: currentWidth,
+        clientWidth: root.clientWidth,
+        scrollWidth: root.scrollWidth,
+        navigationRight: navigation.getBoundingClientRect().right,
+        linksRight: links.getBoundingClientRect().right,
+        languageRight: language.getBoundingClientRect().right,
+      };
+    }, width));
+  }
 
+  console.log("desktop navigation diagnostics", JSON.stringify(diagnostics));
+  await page.setViewportSize({ width: 1536, height: 800 });
   await expect(page.locator("details.site-menu summary")).toBeHidden();
   await expect(page.locator('.desktop-navigation a[href="#fithub"]')).toBeVisible();
-  expect(await page.locator("html").evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+  expect(diagnostics.every(result => result.scrollWidth <= result.clientWidth), JSON.stringify(diagnostics)).toBe(true);
 });
 
 test("navigation breakpoints do not introduce horizontal overflow", async ({ page }) => {
