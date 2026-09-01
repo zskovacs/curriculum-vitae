@@ -89,28 +89,36 @@ test("navigation breakpoints do not introduce horizontal overflow", async ({ pag
   }
 });
 
-test("Hungarian hero keeps Szoftverfejlesztő on one visual line", async ({ page }) => {
+test("Hungarian hero keeps key title terms on one visual line", async ({ page }) => {
   for (const width of [320, 1440, 2536]) {
     await page.setViewportSize({ width, height: 1021 });
     await page.goto("/hu/");
 
-    const lineCount = await page.locator("#hero-title").evaluate((element) => {
-      const word = "Szoftverfejlesztő";
-      const textNode = element.firstChild;
-      const start = textNode.textContent.indexOf(word);
-      const lineTops = new Set();
+    const lineCounts = await page.locator("#hero-title").evaluate((element) => {
+      const words = ["Full-Stack", "Szoftverfejlesztő"];
+      const textNodes = [];
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) textNodes.push(walker.currentNode);
 
-      for (let index = start; index < start + word.length; index += 1) {
-        const range = document.createRange();
-        range.setStart(textNode, index);
-        range.setEnd(textNode, index + 1);
-        lineTops.add(Math.round(range.getBoundingClientRect().top));
-      }
+      return words.map((word) => {
+        const textNode = textNodes.find(node => node.textContent.includes(word));
+        const start = textNode.textContent.indexOf(word);
+        const lineTops = new Set();
 
-      return lineTops.size;
+        for (let index = start; index < start + word.length; index += 1) {
+          const range = document.createRange();
+          range.setStart(textNode, index);
+          range.setEnd(textNode, index + 1);
+          lineTops.add(Math.round(range.getBoundingClientRect().top));
+        }
+
+        return { word, lineCount: lineTops.size };
+      });
     });
 
-    expect(lineCount, `viewport width: ${width}px`).toBe(1);
+    for (const { word, lineCount } of lineCounts) {
+      expect(lineCount, `${word} at viewport width: ${width}px`).toBe(1);
+    }
   }
 });
 
