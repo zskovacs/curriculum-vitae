@@ -18,6 +18,7 @@ function renderSitemap() {
 async function copyPublicFiles(outDir) {
   await Promise.all([
     copyFile("public/CNAME", join(outDir, "CNAME")),
+    copyFile("public/favicon.svg", join(outDir, "favicon.svg")),
     copyFile("public/google537486c8762b25a2.html", join(outDir, "google537486c8762b25a2.html")),
     copyFile("src/scripts/site.js", join(outDir, "assets", "site.js")),
   ]);

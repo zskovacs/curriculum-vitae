@@ -32,6 +32,7 @@ test("builds crawlable English and Hungarian pages", async () => {
   assert.match(en, /rel="alternate" hreflang="hu" href="https:\/\/cv\.kovacs\.id\/hu\/"/);
   assert.match(hu, /rel="canonical" href="https:\/\/cv\.kovacs\.id\/hu\/"/);
   assert.match(en, /application\/ld\+json/);
+  assert.match(en, /<link rel="icon" href="\/favicon\.svg" type="image\/svg\+xml">/);
   assert.match(en, /\+36&nbsp;30&nbsp;160&nbsp;6530/);
   assert.doesNotMatch(en, /\n[ \t]+\n/);
   assert.doesNotMatch(en, /class="resume-link"/);
@@ -57,6 +58,7 @@ test("builds crawlable English and Hungarian pages", async () => {
   await stat(join(outDir, "sitemap.xml"));
   await stat(join(outDir, "CNAME"));
   await stat(join(outDir, "google537486c8762b25a2.html"));
+  await stat(join(outDir, "favicon.svg"));
 });
 
 test("Person metadata contains exactly the localized title and documented expertise", async () => {

@@ -33,6 +33,7 @@ export function renderDocument({ content, alternate, body }) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(content.seo.title)}</title>
   <meta name="description" content="${escapeHtml(content.seo.description)}">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="${escapeHtml(canonicalUrl)}">
   <link rel="alternate" hreflang="${escapeHtml(content.locale)}" href="${escapeHtml(canonicalUrl)}">
   <link rel="alternate" hreflang="${escapeHtml(alternate.locale)}" href="${escapeHtml(alternateUrl)}">
