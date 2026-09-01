@@ -89,6 +89,31 @@ test("navigation breakpoints do not introduce horizontal overflow", async ({ pag
   }
 });
 
+test("Hungarian hero keeps Szoftverfejlesztő on one visual line", async ({ page }) => {
+  for (const width of [320, 1440, 2536]) {
+    await page.setViewportSize({ width, height: 1021 });
+    await page.goto("/hu/");
+
+    const lineCount = await page.locator("#hero-title").evaluate((element) => {
+      const word = "Szoftverfejlesztő";
+      const textNode = element.firstChild;
+      const start = textNode.textContent.indexOf(word);
+      const lineTops = new Set();
+
+      for (let index = start; index < start + word.length; index += 1) {
+        const range = document.createRange();
+        range.setStart(textNode, index);
+        range.setEnd(textNode, index + 1);
+        lineTops.add(Math.round(range.getBoundingClientRect().top));
+      }
+
+      return lineTops.size;
+    });
+
+    expect(lineCount, `viewport width: ${width}px`).toBe(1);
+  }
+});
+
 test("keyboard users can skip navigation", async ({ page }) => {
   await page.goto("/");
   await page.keyboard.press("Tab");
